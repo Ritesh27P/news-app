@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Search from "./components/Search";
+import { useFetchNewsQuery } from "./store";
+import NewsList from "./components/NewsList";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    const [query, setQuery] = useState(null)
+    const handleSearch = searchQuery => {
+        if (searchQuery.length > 1) setQuery(searchQuery)
+    }
+
+    return (
+        <div className="col1">
+            <div>
+                <Search handleSearch={handleSearch}/>
+            </div>
+            { !query && <NewsList query="india" />}
+            { query && <NewsList query={query} /> }
+        </div>
+    )
 }
 
 export default App;
